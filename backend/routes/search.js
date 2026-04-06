@@ -7,23 +7,30 @@ const router = express.Router()
 
 router.post('/search', async (req, res) => {
   try {
+    console.log('📍 POST /search recibido:', req.body)
     const { address } = req.body
 
     if (!address) {
+      console.log('❌ Address no proporcionada')
       return res.status(400).json({ error: 'Address is required' })
     }
 
     // Try to geocode the address
     const geocoded = await geocodeAddress(address)
+    console.log('🔍 Geocoded result:', geocoded)
     
     if (!geocoded) {
+      console.log('❌ Geocoding falló')
       return res.status(404).json({ error: 'Address not found' })
     }
 
     // Get quadrant
+    console.log(`📍 Calculating quadrant for: lat=${geocoded.lat}, lng=${geocoded.lng}`)
     const quadrant = getQuadrant(geocoded.lat, geocoded.lng)
+    console.log('📍 Quadrant result:', quadrant)
     
     if (!quadrant) {
+      console.log('❌ Quadrant is null - dirección fuera del área')
       return res.status(400).json({ error: 'Address is outside coverage area' })
     }
 

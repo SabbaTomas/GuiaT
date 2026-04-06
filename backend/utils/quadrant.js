@@ -17,10 +17,12 @@ const AMBA_BOUNDS = {
 
 function getQuadrant(lat, lng) {
   // Check if within extended AMBA bounds
+  // For negative latitudes (south hemisphere): north is GREATER (less negative)
   if (
-    lat < AMBA_BOUNDS.north || lat > AMBA_BOUNDS.south ||
+    lat > AMBA_BOUNDS.north || lat < AMBA_BOUNDS.south ||
     lng < AMBA_BOUNDS.west || lng > AMBA_BOUNDS.east
   ) {
+    console.log(`❌ Out of bounds: lat=${lat} (bounds: ${AMBA_BOUNDS.south} to ${AMBA_BOUNDS.north}), lng=${lng} (bounds: ${AMBA_BOUNDS.west} to ${AMBA_BOUNDS.east})`)
     return null // Outside coverage area
   }
 

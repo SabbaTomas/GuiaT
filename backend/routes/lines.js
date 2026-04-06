@@ -7,11 +7,13 @@ const router = express.Router()
 router.get('/lines/:quadrant', async (req, res) => {
   try {
     const { quadrant } = req.params
+    console.log(`[LINES] Searching for quadrant: ${quadrant}`)
 
     // Find all bus lines that pass through this quadrant
     const lines = await BusLine.find({
       quadrants: quadrant
     })
+    console.log(`[LINES] Found ${lines.length} lines for quadrant ${quadrant}:`, lines.map(l => l.number))
 
     if (!lines.length) {
       return res.json({ lines: [] })

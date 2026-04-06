@@ -13,7 +13,7 @@ const busLinesData = [
     company: 'Transportes Metropolitanos',
     type: 'colectivo',
     color: '#FF0000',
-    quadrants: ['C4', 'C5', 'D4', 'D5', 'E5', 'E6'],
+    quadrants: ['N14', 'N15', 'N16', 'O14', 'O15', 'O16', 'O17', 'P16', 'P17', 'P18'],
     route: {
       startPoint: 'Primera Junta',
       endPoint: 'Quilmes',
@@ -39,7 +39,7 @@ const busLinesData = [
     company: 'Transportes Metropolitanos',
     type: 'colectivo',
     color: '#00AA00',
-    quadrants: ['B3', 'B4', 'C4', 'C5', 'D5'],
+    quadrants: ['M14', 'M15', 'N15', 'N16', 'O15', 'O16', 'O17'],
     route: {
       startPoint: 'Puerto Madero',
       endPoint: 'Villa Crespo',
@@ -62,7 +62,7 @@ const busLinesData = [
     company: 'Autobuses Chacarita',
     type: 'colectivo',
     color: '#0000FF',
-    quadrants: ['D3', 'D4', 'D5', 'E5', 'E6'],
+    quadrants: ['O16', 'O17', 'O18', 'P17', 'P18', 'P19'],
     route: {
       startPoint: 'Estación Chacarita',
       endPoint: 'Acoyte',
@@ -83,7 +83,7 @@ const busLinesData = [
     company: 'Tranvías del Sud',
     type: 'colectivo',
     color: '#FF8800',
-    quadrants: ['E4', 'E5', 'F5', 'F6'],
+    quadrants: ['N17', 'O17', 'O18', 'P18', 'P19', 'Q19'],
     route: {
       startPoint: 'Flores',
       endPoint: 'Ramos Mejía',
@@ -103,7 +103,7 @@ const busLinesData = [
     company: 'Empresa de Transporte Ciudad',
     type: 'colectivo',
     color: '#FF0099',
-    quadrants: ['A1', 'B1', 'B2', 'C2', 'C3'],
+    quadrants: ['L12', 'L13', 'M13', 'M14', 'N14', 'N15'],
     route: {
       startPoint: 'Zona Norte',
       endPoint: 'Centro',

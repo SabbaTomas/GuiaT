@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import SearchBar from '../components/SearchBar'
 import Map from '../components/Map'
 import LineSelector from '../components/LineSelector'
@@ -8,6 +9,26 @@ export default function Home() {
   const [selectedLine, setSelectedLine] = useState(null)
   const [loading, setLoading] = useState(false)
   const [lines, setLines] = useState([])
+  const [routeLoading, setRouteLoading] = useState(false)
+
+  // Handle line selection - fetch full route data
+  const handleSelectLine = async (line) => {
+    setRouteLoading(true)
+    try {
+      const response = await axios.get(`http://localhost:5000/api/line/${line.id}`)
+      const { line: lineData, route } = response.data
+      
+      setSelectedLine({
+        ...lineData,
+        route: route
+      })
+    } catch (error) {
+      console.error('Error fetching line route:', error)
+      setSelectedLine(line) // Fallback to basic line data
+    } finally {
+      setRouteLoading(false)
+    }
+  }
 
   return (
     <div className="flex flex-col h-full bg-gray-100">
@@ -50,7 +71,7 @@ export default function Home() {
           <LineSelector 
             lines={lines} 
             selectedLine={selectedLine}
-            onSelectLine={setSelectedLine}
+            onSelectLine={handleSelectLine}
           />
         </div>
 

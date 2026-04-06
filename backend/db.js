@@ -1,16 +1,20 @@
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
-
-dotenv.config()
-
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/guiat'
 
 export async function connectDB() {
   try {
-    await mongoose.connect(MONGODB_URI)
+    const MONGODB_URI = process.env.MONGODB_URI
+    
+    if (!MONGODB_URI) {
+      throw new Error('MONGODB_URI is not defined in .env')
+    }
+    
+    console.log('Connecting to MongoDB...')
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+    })
     console.log('✅ Connected to MongoDB')
   } catch (error) {
-    console.error('❌ MongoDB connection error:', error)
+    console.error('❌ MongoDB connection error:', error.message)
     process.exit(1)
   }
 }

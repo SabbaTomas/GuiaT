@@ -9,6 +9,9 @@ export async function geocodeAddress(address) {
         q: address + ', Buenos Aires, Argentina',
         format: 'json',
         limit: 1
+      },
+      headers: {
+        'User-Agent': 'GuiaT-App (https://github.com/user/guiat)'
       }
     })
 
@@ -22,7 +25,7 @@ export async function geocodeAddress(address) {
     }
     return null
   } catch (error) {
-    console.error('Geocoding error:', error)
+    console.error('Geocoding error:', error.message)
     return null
   }
 }
@@ -34,6 +37,9 @@ export async function reverseGeocode(lat, lng) {
         lat,
         lon: lng,
         format: 'json'
+      },
+      headers: {
+        'User-Agent': 'GuiaT-App (https://github.com/user/guiat)'
       }
     })
 
@@ -42,7 +48,7 @@ export async function reverseGeocode(lat, lng) {
     }
     return null
   } catch (error) {
-    console.error('Reverse geocoding error:', error)
+    console.error('Reverse geocoding error:', error.message)
     return null
   }
 }
