@@ -3,6 +3,8 @@ import axios from 'axios'
 import SearchBar from '../components/SearchBar'
 import Map from '../components/Map'
 import LineSelector from '../components/LineSelector'
+import Favorites from '../components/Favorites'
+import { addToSearchHistory, addFavoriteAddress } from '../utils/localStorage'
 
 export default function Home() {
   const [searchResult, setSearchResult] = useState(null)
@@ -10,6 +12,37 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [lines, setLines] = useState([])
   const [routeLoading, setRouteLoading] = useState(false)
+
+  // Handle search from SearchBar
+  const handleSearch = (result) => {
+    setSearchResult(result)
+    // Lines are set separately via onLinesFound callback
+    setSelectedLine(null)
+    
+    // Save to history
+    addToSearchHistory(result)
+  }
+
+  // Handle selecting history/favorite address
+  const handleSelectFromHistory = async (address) => {
+    setSearchResult(address)
+    setSelectedLine(null)
+    setLoading(true)
+    
+    try {
+      // Fetch lines for this quadrant
+      if (address.quadrant) {
+        const linesResponse = await axios.get(
+          `http://localhost:5000/api/lines/${address.quadrant}`
+        )
+        setLines(linesResponse.data.lines || [])
+      }
+    } catch (error) {
+      console.error('Error fetching lines:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   // Handle line selection - fetch full route data
   const handleSelectLine = async (line) => {
@@ -24,10 +57,15 @@ export default function Home() {
       })
     } catch (error) {
       console.error('Error fetching line route:', error)
-      setSelectedLine(line) // Fallback to basic line data
+      setSelectedLine(line)
     } finally {
       setRouteLoading(false)
     }
+  }
+
+  // Handle selecting favorite line
+  const handleSelectFavoriteLine = async (line) => {
+    await handleSelectLine(line)
   }
 
   return (
@@ -37,7 +75,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold mb-4">🗺️ GuíaT</h1>
           <SearchBar 
-            onSearch={setSearchResult} 
+            onSearch={handleSearch}
             onLoading={setLoading}
             onLinesFound={setLines}
           />
@@ -46,8 +84,8 @@ export default function Home() {
 
       {/* Main content */}
       <div className="flex flex-1 gap-4 p-4 overflow-hidden">
-        {/* Left sidebar - Results and Lines */}
-        <div className="w-80 bg-white rounded-lg shadow-lg overflow-y-auto">
+        {/* Left sidebar - Results, Lines, and Favorites */}
+        <div className="w-80 bg-white rounded-lg shadow-lg overflow-y-auto flex flex-col">
           {loading && (
             <div className="p-4 text-center text-gray-500">
               Buscando...
@@ -68,10 +106,18 @@ export default function Home() {
           )}
 
           {/* Line Selector */}
-          <LineSelector 
-            lines={lines} 
-            selectedLine={selectedLine}
-            onSelectLine={handleSelectLine}
+          <div className="flex-1 overflow-y-auto">
+            <LineSelector 
+              lines={lines} 
+              selectedLine={selectedLine}
+              onSelectLine={handleSelectLine}
+            />
+          </div>
+
+          {/* Favorites */}
+          <Favorites 
+            onSelectHistory={handleSelectFromHistory}
+            onSelectFavoriteLine={handleSelectFavoriteLine}
           />
         </div>
 

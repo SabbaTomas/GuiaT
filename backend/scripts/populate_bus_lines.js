@@ -13,7 +13,7 @@ const busLinesData = [
     company: 'Transportes Metropolitanos',
     type: 'colectivo',
     color: '#FF0000',
-    quadrants: ['N14', 'N15', 'N16', 'O14', 'O15', 'O16', 'O17', 'P16', 'P17', 'P18'],
+    quadrants: ['N12', 'N13', 'N14', 'N15', 'N16', 'N17', 'O12', 'O13', 'O14', 'O15', 'O16', 'O17', 'O18', 'O19', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'P21'],
     route: {
       startPoint: 'Primera Junta',
       endPoint: 'Quilmes',
@@ -39,7 +39,7 @@ const busLinesData = [
     company: 'Transportes Metropolitanos',
     type: 'colectivo',
     color: '#00AA00',
-    quadrants: ['M14', 'M15', 'N15', 'N16', 'O15', 'O16', 'O17'],
+    quadrants: ['L14', 'L15', 'L16', 'L17', 'M14', 'M15', 'M16', 'M17', 'N14', 'N15', 'N16', 'N17', 'O14', 'O15', 'O16', 'O17', 'P15', 'P16', 'P17'],
     route: {
       startPoint: 'Puerto Madero',
       endPoint: 'Villa Crespo',
@@ -62,7 +62,7 @@ const busLinesData = [
     company: 'Autobuses Chacarita',
     type: 'colectivo',
     color: '#0000FF',
-    quadrants: ['O16', 'O17', 'O18', 'P17', 'P18', 'P19'],
+    quadrants: ['O18', 'O19', 'O20', 'O21', 'P18', 'P19', 'P20', 'P21', 'Q19', 'Q20', 'Q21', 'Q22', 'Q23'],
     route: {
       startPoint: 'Estación Chacarita',
       endPoint: 'Acoyte',
@@ -83,7 +83,7 @@ const busLinesData = [
     company: 'Tranvías del Sud',
     type: 'colectivo',
     color: '#FF8800',
-    quadrants: ['N17', 'O17', 'O18', 'P18', 'P19', 'Q19'],
+    quadrants: ['P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'Q12', 'Q13', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18'],
     route: {
       startPoint: 'Flores',
       endPoint: 'Ramos Mejía',
@@ -103,7 +103,7 @@ const busLinesData = [
     company: 'Empresa de Transporte Ciudad',
     type: 'colectivo',
     color: '#FF0099',
-    quadrants: ['L12', 'L13', 'M13', 'M14', 'N14', 'N15'],
+    quadrants: ['K10', 'K11', 'K12', 'K13', 'L10', 'L11', 'L12', 'L13', 'L14', 'M10', 'M11', 'M12', 'M13', 'M14', 'M15', 'N12', 'N13', 'N14', 'N15'],
     route: {
       startPoint: 'Zona Norte',
       endPoint: 'Centro',
