@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const busRouteSchema = new mongoose.Schema({
   lineId: mongoose.Schema.Types.ObjectId,
   lineNumber: String,
-  coordinates: [[Number]], // Array of [lon, lat] pairs (GeoJSON format)
+  coordinates: [[Number]], // Array of [lng, lat] pairs
   stops: [{
     name: String,
     lat: Number,

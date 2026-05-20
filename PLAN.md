@@ -199,6 +199,38 @@ GuiaT/
 - Referencias: A-Z (filas) × 1-30 (columnas)
 - Ejemplo: "O17" = Almagro
 
+---
+
+## 📍 ANEXO: Rutas Reales - Línea 152
+
+### 🌟 Mejora Opcional
+Integrar datos reales del CNRT en lugar de líneas dummy.
+
+### Recursos Disponibles
+- **Archivo KML**: `/resources/lineas_jn_rmba_cnrt.kml` ✅
+- **Datos**: 6 rutas reales de la línea 152
+  - 3 recorridos (A, B, C)
+  - 2 sentidos por recorrido (IDA/VUELTA)
+  - 400+ puntos de coordenadas cada una
+
+### Línea 152
+- **Empresa**: Empresa Tandilense SACIFI y de F
+- **Jurisdicción**: NACIONAL
+- **Color**: Rojo Carmesí (#DC143C)
+
+### Implementación
+```bash
+cd backend
+node scripts/parse-kml-line-152.js
+```
+
+**Resultado**:
+- Línea 152 con recorridos A, B, C reales
+- 20+ paradas generadas automáticamente por recorrido
+- Rutas com 400+ coordenadas precisas
+
+📄 **Documentación completa**: Ver [FASE-2-ANEXO.md](FASE-2-ANEXO.md)
+
 ### Bounds AMBA
 ```
 North: -34.35

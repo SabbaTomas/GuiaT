@@ -16,6 +16,65 @@ export default function Map({ searchResult, selectedLine }) {
   const markerRef = useRef(null)
   const polylineRef = useRef(null)
   const stopsMarkersRef = useRef([])
+  const gridLayerRef = useRef(null)
+
+  // Función para dibujar el grid de cuadrantes
+  const drawQuadrantGrid = () => {
+    if (!mapInstance.current) return
+
+    // Remover grid anterior si existe
+    if (gridLayerRef.current) {
+      mapInstance.current.removeLayer(gridLayerRef.current)
+    }
+
+    const AMBA_BOUNDS = {
+      north: -34.35,
+      south: -34.9,
+      east: -58.2,
+      west: -58.7
+    }
+
+    const GRID_SIZE = 30
+    const GRID_COLOR = '#cccccc'
+    const GRID_WEIGHT = 1
+    const GRID_OPACITY = 0.7
+
+    const latRange = AMBA_BOUNDS.north - AMBA_BOUNDS.south
+    const lngRange = AMBA_BOUNDS.east - AMBA_BOUNDS.west
+
+    const gridLines = L.featureGroup()
+
+    // Líneas horizontales (latitud)
+    for (let i = 0; i <= GRID_SIZE; i++) {
+      const lat = AMBA_BOUNDS.north - (i / GRID_SIZE) * latRange
+      gridLines.addLayer(
+        L.polyline(
+          [
+            [lat, AMBA_BOUNDS.west],
+            [lat, AMBA_BOUNDS.east]
+          ],
+          { color: GRID_COLOR, weight: GRID_WEIGHT, opacity: GRID_OPACITY }
+        )
+      )
+    }
+
+    // Líneas verticales (longitud)
+    for (let i = 0; i <= GRID_SIZE; i++) {
+      const lng = AMBA_BOUNDS.west + (i / GRID_SIZE) * lngRange
+      gridLines.addLayer(
+        L.polyline(
+          [
+            [AMBA_BOUNDS.north, lng],
+            [AMBA_BOUNDS.south, lng]
+          ],
+          { color: GRID_COLOR, weight: GRID_WEIGHT, opacity: GRID_OPACITY }
+        )
+      )
+    }
+
+    gridLayerRef.current = gridLines
+    gridLayerRef.current.addTo(mapInstance.current)
+  }
 
   useEffect(() => {
     // Initialize map on component mount
@@ -29,6 +88,9 @@ export default function Map({ searchResult, selectedLine }) {
         attribution: '© OpenStreetMap contributors',
         maxZoom: 19,
       }).addTo(mapInstance.current)
+
+      // Dibujar grid de cuadrantes
+      drawQuadrantGrid()
     }
   }, [])
 

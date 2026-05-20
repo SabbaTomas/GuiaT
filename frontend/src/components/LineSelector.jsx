@@ -58,12 +58,11 @@ export default function LineSelector({ lines, selectedLine, onSelectLine }) {
               <div className="flex items-center gap-3 flex-1">
                 <div
                   className="w-8 h-8 rounded flex items-center justify-center text-white text-sm font-bold"
-                  style={{ backgroundColor: colors[idx % colors.length] }}
+                  style={{ backgroundColor: line.color || colors[idx % colors.length] }}
                 >
                   {line.number}
                 </div>
                 <div>
-                  <p className="font-bold">{line.number}</p>
                   <p className="text-xs opacity-75">{line.company}</p>
                 </div>
               </div>

@@ -19,10 +19,12 @@ router.get('/lines/:quadrant', async (req, res) => {
       return res.json({ lines: [] })
     }
 
-    // Enrich with route data
+    // Enrich with route data (primer recorrido disponible por línea)
     const enrichedLines = await Promise.all(
       lines.map(async (line) => {
         const route = await BusRoute.findOne({ lineNumber: line.number })
+          .sort({ recorrido: 1, sentido: 1 })
+
         return {
           id: line._id,
           number: line.number,
@@ -31,7 +33,9 @@ router.get('/lines/:quadrant', async (req, res) => {
           type: line.type,
           route: route ? {
             coordinates: route.coordinates,
-            stops: route.stops
+            stops: route.stops,
+            recorrido: route.recorrido,
+            sentido: route.sentido
           } : null
         }
       })
@@ -53,7 +57,10 @@ router.get('/line/:lineId', async (req, res) => {
       return res.status(404).json({ error: 'Line not found' })
     }
 
-    const route = await BusRoute.findOne({ lineNumber: line.number })
+    const routes = await BusRoute.find({ lineNumber: line.number })
+      .sort({ recorrido: 1, sentido: 1 })
+
+    const primaryRoute = routes.length ? routes[0] : null
 
     res.json({
       line: {
@@ -63,12 +70,21 @@ router.get('/line/:lineId', async (req, res) => {
         color: line.color,
         type: line.type
       },
-      route: route ? {
-        coordinates: route.coordinates,
-        stops: route.stops,
+      route: primaryRoute ? {
+        coordinates: primaryRoute.coordinates,
+        stops: primaryRoute.stops,
+        recorrido: primaryRoute.recorrido,
+        sentido: primaryRoute.sentido,
+        startPoint: primaryRoute.startPoint,
+        endPoint: primaryRoute.endPoint
+      } : null,
+      routes: routes.map(route => ({
+        id: route._id,
+        recorrido: route.recorrido,
+        sentido: route.sentido,
         startPoint: route.startPoint,
         endPoint: route.endPoint
-      } : null
+      }))
     })
   } catch (error) {
     console.error('Line detail error:', error)
